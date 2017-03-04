@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<style type="text/css">
+.center {
+	text-align: center;
+}
+
+.input-primay {
+	width: 350px;
+	height: 40px;
+	border: 1px solid #AAA;
+	padding: 5px 10px;
+	margin-bottom: 20px;
+}
+
+.btn-primay {
+	width: 370px;
+	height: 50px;
+	background: #EF5B00;
+	border: 0px;
+	color: #FFF;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.first0 {
+	width: 850px;
+	height: 72px;
+	margin: auto;
+}
+
+.first1 {
+	float: left;
+	margin: auto;
+}
+
+#content {
+	width: 850px;
+	margin: auto;
+}
+
+#mesg-register {
+	font-size: 35px;
+	color: #424242;
+	font-weight: normal;
+	position: relative;
+	top: -17px;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/Toast.js"></script>
+<script type="text/javascript">
+	$(document).ready(toCenter);
+	function toCenter() {
+		var marTop = window.innerHeight / 2 - $("#content").height() / 2;
+		$("#content").css({
+			"margin-top" : marTop + "px"
+		});
+	}
+	var userName;
+	function toSendCode() {
+		userName = $("#reg-name").val();
+		var data_email;
+		var page_email = $("#reg-email").val();
+		var _url = "forgetPwdServlet?type=hasUser&userName=" + userName;
+		$.ajax({
+			type : 'get',
+			url : _url,
+			success : function(result) {
+				var _msg = eval("(" + result + ")");
+				if (!_msg.hasUser) {
+					Toast.showMessage("用户名错误", 1000);
+				} else {
+					data_email = _msg.email;
+					if (page_email == "") {
+						Toast.showMessage("请输入用户对应邮箱", 1000);
+					} else {
+						if (data_email != page_email) {
+							Toast.showMessage("邮箱错误", 1000);
+						} else {
+							$("#btn_sendCode").prop("disabled", false);
+							waitting();
+							_url = "forgetPwdServlet?type=send&userName="
+									+ userName;
+							$.ajax({
+								type : 'get',
+								url : _url,
+								success : function(result) {
+									var _msg = eval("(" + result + ")");
+									if (_msg.code == 200) {
+										Toast.showMessage("验证码已发送,请登录邮箱查看",
+												3000);
+										$("#key").prop("value", _msg.key);
+									}
+								}
+							})
+						}
+					}
+				}
+			}
+		})
+	}
+
+	var key;
+	var newPwd;
+	var newPwd2;
+	function toUpdatePwd() {
+		newPwd = $("#reg-pwd").val();
+		if (newPwd.length<6||newPwd.length>16) {
+			Toast.showMessage("密码长度必需在6-16之间", 3000);
+			return;
+		}
+		newPwd2 = $("#reg-pwd2").val();
+		if (newPwd == newPwd2) {
+			key = $("#key").val();
+			var value = $("#reg-key").val();
+			if (key != "" && value != null) {
+				$.ajax({
+					type : 'get',
+					url : "verifyMailCodeServlet?key=" + key + "&value="
+							+ value,
+					success : function(result) {
+						var _msg = eval("(" + result + ")");
+						if (_msg.code == 200) {
+							var _data = "userName=" + userName + "&password="
+									+ newPwd;
+							$.ajax({
+								type : 'post',
+								url : "findPwdServlet",
+								data : _data,
+								dataType : 'html',
+								success : function(e) {
+									var _msg = eval("(" + e + ")");
+									if (_msg.code == 200) {
+										Toast.showMessage("密码修改成功", 2000);
+										window.location.href = "login.jsp";
+									} else {
+										Toast.showMessage("修改失败", 2000);
+									}
+								}
+							})
+						} else {
+							Toast.showMessage("验证码错误", 2000);
+						}
+					}
+				})
+			}
+		} else {
+			Toast.showMessage("两次密码不相同", 2000);
+		}
+	}
+	var wait = 60;
+	function waitting() {
+		if (wait == 0) {
+			$("#btn_sendCode").prop("disabled", false);
+			$("#btn_sendCode").prop("value", "发送验证码");
+			$("#btn_sendCode").css("background-color", "#4C9ED9");
+			$("#btn_sendCode").css("color", "write");
+			wait = 60;
+		} else {
+			$("#btn_sendCode").prop("disabled", true);
+			$("#btn_sendCode").prop("value", "重新发送(" + wait + ")s");
+			$("#btn_sendCode").css("background-color", "#DDDDDD");
+			$("#btn_sendCode").css("color", "black");
+			wait--;
+			setTimeout(function() {
+				waitting()
+			}, 1000)
+		}
+	}
+</script>
+<body>
+	<div id="content">
+
+		<div id="logo" class="center" style="margin-bottom: 30px;">
+			<img src="img/icon.png" width="60px" /> <span id="mesg-register">找回密码</span>
+		</div>
+		<div class="center">
+			<input type="text" placeholder="用户名" class="input-primay"
+				id="reg-name" />
+		</div>
+		<div class="center" style="overflow: hidden;">
+			<div class="first0">
+				<input type="text" placeholder="邮箱" class="input-primay"
+					style="width:205px ;" id="reg-email" /> <input type="button"
+					value="发送验证码" onclick="javascrip:toSendCode()" id="btn_sendCode"
+					style="width:140px;height: 50px;background: #4C9ED9;border: 0px;color: #FFF; cursor: pointer;" />
+			</div>
+		</div>
+		<div class="center">
+			<input type="text" placeholder="验证码" class="input-primay"
+				id="reg-key" /> <input type="hidden" id="key" />
+		</div>
+		<div class="center">
+			<input type="password" placeholder="新密码" class="input-primay"
+				id="reg-pwd" />
+		</div>
+		<div class="center">
+			<input type="password" placeholder="重复密码" class="input-primay"
+				id="reg-pwd2" />
+		</div>
+		<div class="center">
+			<input type="submit" class="btn-primay" value="修改密码"
+				onclick="toUpdatePwd()" />
+		</div>
+		<div class="line"></div>
+		<div class="center" style="margin-top: 40px;">
+			<a href="login.jsp"
+				style="margin-right: 20px;color: #777;text-decoration: none;">返回登录</a>
+		</div>
+	</div>
+</body>
+</html>

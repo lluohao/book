@@ -1,0 +1,105 @@
+#content {
+	width: 1200px;
+	margin: auto;
+	color: #4C4C4C;
+}
+#content a {
+	text-decoration: none;
+	color:black;
+}
+#content a:hover {
+	cursor: pointer;
+	color: #EF5B00;
+}
+
+.search_left {
+	float: left;
+	height: 170px;
+	width: 128px;
+}
+
+.search_bottom {
+	width: 500px;
+	float: left;
+	margin-left: 20px;
+}
+
+.search_bottom>div {
+	margin-top: 5px;
+	line-height: 30px;
+	max-width: 500px;
+	max-height: 30px;
+	font-size: 13px;
+	overflow: hidden;
+}
+
+.search_right>div {
+	margin-top: 5px;
+}
+
+.search_right {
+	width: 100px;
+	float: left;
+	padding-top: 100px;
+	font-size: 13px;
+}
+
+.search_book {
+	margin-top: 30px;
+	overflow: hidden;
+	border-bottom: 1px dashed #E2DCD7;
+	padding-bottom: 10px;
+}
+#search_booklist{
+	padding-top: 30px;
+}
+#left_div {
+	width: 800px;
+	min-height: 600px;
+	float: left;
+	border-right: 1px solid #E2DCD7;
+}
+em{
+	color:red;
+	font-weight: bold;
+	font-style: normal;
+}
+#right_div {
+	width: 300px;
+	float: left;
+}
+
+.recommend_item {
+	float: left;
+	margin-left: 8px;
+}
+
+.recommend_item>div {
+	max-width: 200px;
+	max-height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+}
+
+.recommend_book {
+	margin-top: 15px;
+	font-size: 13px;
+	overflow: hidden;
+}
+
+.recommend_book:hover {
+	cursor: pointer;
+	background-color: #bdf9b1;
+}
+
+.recommend_book img {
+	width: 89px;
+	height: 119px;
+}
+#no_found{
+	font-size:20px;
+	font-weight: bold;
+	text-align: center;
+	padding-top:30px;
+	line-height: 200px;
+}

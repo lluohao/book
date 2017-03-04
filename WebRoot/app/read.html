@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/static.js"></script>
+		<script>
+			mui.init();
+			document.addEventListener("plusready", function() {
+				bookId = window.location.href.split("?id=")[1];
+				plus.navigator.setFullscreen(true);
+				plus.device.setWakelock(true); 
+				mui.back = function() {
+					plus.navigator.setFullscreen(false);
+					plus.device.setWakelock(false);
+					window.location.href = "index.html";
+				}
+				$(".menu-item").each(function(){
+					var id = $(this).attr("id");
+					$(this).bind("click",function(){
+						eval("("+id+"()"+")");
+					});
+				})
+				initPageDate();
+				page = 1;
+				load();
+			});
+			function night(){
+				var txt = $("#night span").text();
+				if(txt=="夜间:关"){
+					$("#night span").text("夜间:开");
+					$(".div-content").css("background","#000000");
+					$(".div-content").css("color","#444");
+				}else{
+					$("#night span").text("夜间:关");
+					plus.device.setWakelock(false);
+					$(".div-content").css("background","#FAF7ED");
+					$(".div-content").css("color","#333");
+				}
+			}
+			function autoLight(){
+				var txt = $("#autoLight span").text();
+				if(txt=="常亮:关"){
+					$("#autoLight span").text("常亮:开");
+					plus.device.setWakelock(true);
+					mui.toast("保持屏幕唤醒");
+				}else{
+					$("#autoLight span").text("常亮:关");
+					plus.device.setWakelock(false);
+					mui.toast("关闭屏幕唤醒");
+				}
+			}
+			function fontMax(){
+				var old = $("#text-content").css("font-size").replace("px","");
+				$("#text-content").css("font-size",(old*1+1)+"px");
+				console.log(old);
+			}
+			function fontMin(){
+				var old = $("#text-content").css("font-size").replace("px","");
+				$("#text-content").css("font-size",(old*1-1)+"px");
+				console.log(old);
+			}
+			function resize() {
+				var paddingTop = $("#text-content").css("padding-top").replace("px", "");
+				var paddingBot = $("#text-content").css("padding-bottom").replace("px", "");
+				var hei = window.innerHeight - paddingTop-paddingBot;
+				console.log(paddingBot+":"+paddingTop);
+				$("#text-content").css("height", hei + "px");
+				initPageDate()
+			}
+			$(document).ready(resize);
+ 
+			function _click() {
+				var maxY = window.innerHeight;
+				var maxX = window.innerWidth;
+				var evt = window.event;
+				var x = evt.layerX;
+				var y = evt.layerY;
+				if(y < 0.2 * maxY) {
+					alert("防屏暗区");
+				} else if(x < 0.33 * maxX) {
+					prePage();
+				} else if(x < 0.665 * maxX) {
+					$("#menu").toggle();
+					plus.navigator.setFullscreen(!plus.navigator.isFullscreen());
+					initPageDate();
+					load();
+				} else {
+					nextPage();
+				}
+			}
+			
+			function prePage(){
+				if(page>1){
+					page--;
+					load();
+				}
+			}
+			function nextPage(){
+				console.log(maxPage+":"+page)
+				if(page<maxPage){
+					page++;
+					load();
+				}
+			}
+			
+			var maxPage = 0;
+			var page = 0;
+			var lines = 0;
+			var rows = 0;
+			var bookId = 233;
+			function initPageDate(){
+				var hei = $("#text-content").height();
+				var fontSize = $("#text-content").css("font-size").replace("px","");
+				lines = Math.floor(hei/fontSize/2);
+				var wid = $("#text-content").width();
+				rows = Math.floor(wid/fontSize);
+				$.ajax({
+					type:"get",
+					url:base+"/currentBookMessageServlet",
+					async:true,
+					success:function(result){
+						result = eval("("+result+")");
+						$("#page-max").text(result.maxpage);
+						$("#book-title").text(result.name);
+						maxPage = result.maxpage;
+					}
+				});
+			}
+			function load(){
+				$("#text-content").load(base+"/bookTextServlet.do?bookId="+bookId+"&lines="+lines+"&rows="+rows+"&page="+page);
+				$("#page-current").text(page);
+			}
+		</script>
+		<style>
+			html,
+			body,
+			.div-content {
+				margin: 0px;
+				height: 100%;
+				background: #FAF7ED;
+				overflow: hidden;
+			}
+			
+			#text-content {
+				padding: 45px 25px 20px 25px;
+				margin: 0px;
+				word-wrap: break-word;
+				word-break: break-all;
+				white-space: pre-wrap;
+				margin: auto;
+				font-size: 16px;
+				color: #333;
+				line-height: 2;
+				font-family: "微软雅黑", "Microsoft YaHei";
+			}
+			
+			#book-message {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				padding: 10px 25px;
+				color: #888;
+				font-size: 12px;
+				display: block;
+				width: 100%;
+			}
+			
+			#book-title {
+				float: left;
+			}
+			
+			#book-page {
+				float: right;
+				padding-right: 50px;
+			}
+			
+			#menu {
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				background: #000;
+				height: 100px;
+				width: 100%;
+				display: none;
+			}
+			
+			.menu-image {
+				width: 50px;
+				height: 50px;
+				border-radius: 25px;
+				margin: auto;
+			}
+			
+			.menu-image img {
+				width: 30px;
+				height: 30px;
+				margin-top: 8px;
+				margin-left: 10px;
+			}
+			
+			.menu-item {
+				margin-top: 20px;
+				float: left;
+				width: 25%;
+			}
+			
+			.menu-text {
+				text-align: center;
+				width: 50px;
+				color: #666;
+				display: inline-block;
+				font-size: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="book-message">
+			<span id="book-title">朝花夕拾</span>
+			<span id="book-page">
+				<span id="page-current">3</span> /
+			<span id="page-max">100</span>
+			</span>
+		</div>
+		<div class="div-content" onclick="_click()">
+
+			<pre id="text-content"></pre>
+		</div>
+		<div id="back">
+
+		</div>
+		<div id="menu">
+			<div class="menu-item"  id="night">
+				<div class="menu-image">
+					<img src="img/moon_star_128px_1189632_easyicon.net.png" />
+					<span class="menu-text">夜间:关</span>
+				</div>
+			</div>
+			<div class="menu-item" id="fontMax">
+				<div class="menu-image" >
+					<img src="img/increase_font_96px_1168921_easyicon.net.png" />
+					<span class="menu-text">字号加</span>
+				</div>
+			</div>
+			<div class="menu-item" id="fontMin">
+				<div class="menu-image" >
+					<img src="img/decrease_font_96px_1168908_easyicon.net.png" />
+					<span class="menu-text">字号减</span>
+				</div>
+			</div>
+			<div class="menu-item" id="autoLight">
+				<div class="menu-image">
+					<img src="img/light_alarm_160.2119205298px_1189592_easyicon.net.png" />
+					<span class="menu-text">常亮:开</span>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/jqeury-md5.js" ></script>
+		<script>
+			function md5(){
+				var pwd = $("#password").val();
+				$("#out").text($.md5(pwd));
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="password" />
+		<button onclick="md5()">加密</button>
+		<p id="out"></p>
+	</body>
+</html>

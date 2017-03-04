@@ -1,0 +1,26 @@
+.up_div {
+	float: left;
+	width: 70px;
+	border-right: 1px solid #E2DCD7;
+	text-align: center;
+	line-height: 20px;
+	font-size: 12px;
+}
+#up{
+	height:40px;
+	padding-top:20px;
+	border-top: 1px solid #E2DCD7;
+}
+#up_center{
+	width:500px;
+	margin:auto;
+}
+#up a {
+	color:#8C8C8C;
+	text-decoration: none;
+}
+
+#up a:hover {
+	cursor: pointer;
+	color: #fa7a20;
+}

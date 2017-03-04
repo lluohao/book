@@ -1,0 +1,82 @@
+#content {
+	widht: 1200px;
+}
+
+#pay_div>div {
+	float: left;
+	margin-left: 10px;
+	background-color: white;
+	width: 130px;
+	height: 40px;
+}
+
+#pay_count {
+	margin-left: 10px;
+	font-weight: 5px;
+	font-size: 30px;
+	float: left;
+}
+
+#pay_div img {
+	height: 30px;
+	margin-top: 5px;
+	float: left;
+}
+
+#pay_div input,#pay_btn {
+	margin-top: 15px;
+	float: left;
+	background-color: #FA7A20;
+}
+
+#pay_div:hover,#pay_div input:hover,#pay_btn:hover {
+	cursor: pointer;
+}
+
+#pay_div {
+	width: 800px;
+	height: 200px;
+	overflow: hidden;
+	margin: auto;
+	border: 3px solid #FA7A20;
+	background-color: #FBFAF8;
+	overflow: hidden;
+}
+
+#pay_top {
+	text-align: center;
+}
+
+h3 {
+	padding-left: 30px;
+}
+
+#pay_btn {
+	width: 100px;
+	height: 30px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border: none;
+}
+
+#btn_div {
+	width: 800px;
+	margin: auto;
+	border: 3px solid #4C4C4C;
+	border-top: none;
+	overflow: hidden;
+}
+
+#pay_result {
+	font-size: 30px;
+	line-height: 200px;
+	text-align: center;
+}
+
+#pay_result>a {
+	color: #FA7A20;
+	text-decoration: none;
+}
+#pay_result>a:hover {
+	color: red;
+}

@@ -1,0 +1,247 @@
+/* CSS Document */
+#content {
+	width: 1200px;
+	margin: 0 auto;
+}
+.charset{
+	float:right;
+	font-size:14px;
+	color:#444;
+}
+.c_wrap {
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+.w_left {
+	float: left;
+}
+
+.w_right {
+	width: 220px;
+	float: right;
+}
+
+.bookdata {
+	margin-bottom: 30px;
+	width: 691px;
+	height: 241px;
+}
+
+.bookedetail {
+	padding: 1px;
+	margin: 0px;
+}
+
+.b_tab {
+	height: 38px;
+	width: 690px;
+	line-height: 38px;
+	float: left;
+	margin-bottom: 30px;
+	overflow: hidden;
+	border: 1px dotted #888;
+	border-width: 0px 0px 1px 0px;
+	
+}
+
+.b_view {
+	width: 690px;
+	text-align: left;
+	color: #666666;
+}
+
+.chooseOne {
+	color: #EF5B00;
+	font-style: inherit;
+	font-size: 18px;
+}
+
+.cover {
+	float: left;
+	width: 180px;
+	height: 240px;
+}
+
+.describ {
+	float: left;
+	margin-left: 80px;
+	width: 350px;
+	height: 235px;
+}
+#bookName{
+	max-height: 50px;
+	font-size: 18px;
+	line-height: 25px;
+	overflow: hidden;
+}
+
+.appRead {
+	
+}
+
+.others {
+	margin-top: 30px;
+	font-style: normal;
+	font-size: 18px;
+}
+
+.howgood {
+	
+}
+
+.bookAbout {
+	
+}
+
+.data {
+	font-size: 12px;
+	color: #666;
+}
+
+.pay {
+	
+}
+
+.price {
+	margin-bottom: 10px;
+}
+
+.p_price {
+	font-style: normal;
+	margin-left: 4px;
+	font-size: 16px;
+	color: #00CCCC;
+}
+
+.act {
+	
+}
+
+.btns {
+	float: left;
+}
+
+.o_act {
+	list-style: none;
+	float: right;
+	font-size: 11px;
+}
+
+.btn1 {
+	border-radius: 3px;
+	border-style: none;
+	background-color: #4d87de;
+	width: 72px;
+	height: 32px;
+	color: #FFFFFF;
+}
+
+.btn1:hover {
+	cursor: pointer;
+}
+
+.btn2:hover {
+	cursor: pointer;
+}
+
+.btn2 {
+	border-radius: 3px;
+	border-style: solid;
+	border-width: thin;
+	border-color: #00CCFF;
+	width: 100px;
+	height: 32px;
+}
+
+.o_list {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 10px
+}
+
+.o_li {
+	float: left;
+	margin-left: 10px;
+	font-size: 12px;
+	color: #666666;
+}
+
+.books {
+	margin-top: 5px;
+	overflow: hidden;
+}
+
+.b_book {
+	margin-top: 15px;
+	margin-left: 20px;
+	overflow: hidden;
+}
+
+.b_data {
+	margin-top: 15px;
+	margin-left: 10px;
+	font-size: 14px;
+	color: #613F23;
+}
+
+.images {
+	width: 72px;
+	height: 100px;
+}
+
+.appRead {
+	background-color: #F3F0EB;
+	width: 214px;
+	height: 294px;
+}
+
+.appTitle {
+	text-align: center;
+	font-size: 18px;
+	height: 26px;
+	margin-top: 3px;
+}
+
+.app {
+	float: left;
+	margin-top: 20px;
+	margin-left: 18px;
+}
+
+.apps {
+	overflow: hidden;
+}
+
+.theCode {
+	margin-top: 30px;
+	margin-left: 4px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.superLink {
+	color: #EF5B00;
+	text-decoration: none;
+}
+
+.littleLink {
+	color: #666666;
+	text-decoration: none;
+}
+
+.ctrolWidth {
+	word-break: break-all;
+	width: 150px;
+}
+
+#simple-text {
+	margin-top: 50px;
+	color: #444;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: pre-wrap;
+	line-height: 30px
+}

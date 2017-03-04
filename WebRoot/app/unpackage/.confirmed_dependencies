@@ -1,0 +1,92 @@
+{
+  "login.html": {
+    "resources": [
+      "img/icon.png",
+      "css/frame.css",
+      "index.html",
+      "js/static.js",
+      "js/jquery-1.8.3.min.js",
+      "js/mui.min.js",
+      "js/jqeury-md5.js"
+    ],
+    "refer": [
+      "index.html"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "css/index.css",
+      "img/bookImageServlet.jpg",
+      "css/frame.css",
+      "js/jquery-1.8.3.min.js",
+      "img/add_to_cart_72px_1171058_easyicon.net.png",
+      "img/settings_128px_1171072_easyicon.net.png",
+      "shop.html",
+      "img/bookshelf_72px_1180478_easyicon.net.png",
+      "user.html",
+      "shelf.html",
+      "read.html",
+      "js/mui.min.js",
+      "img/icon.png",
+      "login.html",
+      "js/static.js",
+      "img/search.png",
+      "img/add_72px_1181631_easyicon.net.png"
+    ],
+    "refer": [
+      "read.html"
+    ]
+  },
+  "user.html": {
+    "resources": [
+      "css/index.css",
+      "js/jquery-1.8.3.min.js",
+      "img/add_to_cart_72px_1171058_easyicon.net.png",
+      "img/bookImageServlet.jpg",
+      "css/frame.css",
+      "img/settings_128px_1171072_easyicon.net.png",
+      "shop.html",
+      "img/bookshelf_72px_1180478_easyicon.net.png",
+      "index.html"
+    ],
+    "refer": [
+      "shop.html"
+    ]
+  },
+  "shop.html": {
+    "resources": [
+      "css/index.css",
+      "index.html",
+      "js/jquery-1.8.3.min.js",
+      "img/add_to_cart_72px_1171058_easyicon.net.png",
+      "user.html",
+      "img/bookImageServlet.jpg",
+      "css/frame.css",
+      "img/settings_128px_1171072_easyicon.net.png",
+      "img/bookshelf_72px_1180478_easyicon.net.png"
+    ],
+    "refer": [
+      "index.html",
+      "user.html"
+    ]
+  },
+  "read.html": {
+    "resources": [
+      "js/jquery-1.8.3.min.js",
+      "img/increase_font_96px_1168921_easyicon.net.png",
+      "img/format_color_text_72px_1181894_easyicon.net.png",
+      "img/font_77.178236397749px_1148788_easyicon.net.png",
+      "img/decrease_font_96px_1168908_easyicon.net.png",
+      "js/mui.min.js",
+      "index.html",
+      "img/moon_star_128px_1189632_easyicon.net.png",
+      "img/light_alarm_160.2119205298px_1189592_easyicon.net.png",
+      "js/static.js",
+      "img/icon.png",
+      "js/jqeury-md5.js"
+    ],
+    "refer": [
+      "index.html"
+    ]
+  }
+}

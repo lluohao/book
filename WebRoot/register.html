@@ -1,0 +1,73 @@
+<script>
+	function register(){
+		var name = $("#reg-name").val();
+		if(name.length<=1||name.length>20){
+			Toast.showMessage("用度名长度必需在2-20之间",3000);
+			return;
+		}
+		var pwd = $("#reg-pwd").val();
+		if(pwd.length<6||pwd.length>16){
+			Toast.showMessage("密码长度必需在6-16之间",3000);
+			return;
+		}
+		var pwd2 = $("#reg-pwd2").val();
+		if(pwd2!=pwd){
+			Toast.showMessage("两次密码不相同",3000);
+		}
+		var email = $("#reg-email").val();
+		var p=/\w{1,}@[\.\w{1,}]{1,}/;
+		if(email.match(p)){
+			Toast.showMessage("邮箱地址不合法",3000);
+		}
+		var data = "name="+name+"&pwd="+pwd+"&email="+email;
+		$.ajax({
+			type:"post",
+			url:"./register",
+			data:data,
+			async:true,
+			success:function(e){
+				var result = eval("("+e+")");
+				var id = result.id;
+				if(id>0){
+					Toast.showMessage("注册成功",3000);
+					showDiv();
+				}else if(id==-2){
+					Toast.showMessage("用户名或者密码不合法",3000);
+				}else if(id==-3){
+					Toast.showMessage("用户名已经存在",3000);
+				}else if(id==-4){
+					Toast.showMessage("该邮箱已经被注册",3000);
+				}else{
+					Toast.showMessage("注册失败！未知错误",3000);
+				}
+
+			},
+			error:function(){
+				Toast.showMessage("网络连接失败",3000);
+			}
+		});
+	}
+</script>
+<div id="logo" style="margin-bottom: 30px;">
+	<img src="img/icon.png" width="60px" /> <span id="mesg-register">注册皓叶账号</span>
+</div>
+<div class="center">
+	<input type="text" placeholder="用户名" class="input-primay" id="reg-name"/>
+</div>
+<div class="center">
+	<input type="password" placeholder="密码" class="input-primay" id="reg-pwd" />
+</div>
+<div class="center">
+	<input type="password" placeholder="重复密码" class="input-primay" id="reg-pwd2"/>
+</div>
+<div class="center">
+	<input type="text" placeholder="邮箱" class="input-primay" id="reg-email"/>
+</div>
+<div class="center">
+	<input type="submit" class="btn-primay" value="立即注册" onclick="register()" />
+</div>
+<div class="line"></div>
+<div class="center" style="margin-top: 40px;">
+	<a href="javascript:showDiv()" style="margin-right: 20px;color: #777;text-decoration: none;">返回登录</a>
+	<a href="forgetPwd.html" style="text-decoration: none;color: #777;">忘记密码？</a>
+</div>
