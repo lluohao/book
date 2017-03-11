@@ -5,6 +5,7 @@
 
 <head>
 <link rel="stylesheet" href="css/frame.css" />
+<title>皓叶电子书——首页</title>
 <style>
 .index-item {
 	margin-bottom: 50px;

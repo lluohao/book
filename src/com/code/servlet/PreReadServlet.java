@@ -57,7 +57,7 @@ public class PreReadServlet extends HttpServlet {
 		Book[] books = new Book[list.size()];
 		for (int i = 0; i < Math.min(list.size(), 3); i++) {
 			if (list.get(i).getId() == book.getId()) {
-				books[i] = list.get(3);
+				books[i] = list.get(i);
 				req.setAttribute("book" + i, books[i]);
 			} else {
 				books[i] = list.get(i);

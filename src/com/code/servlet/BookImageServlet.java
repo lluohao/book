@@ -31,7 +31,12 @@ public class BookImageServlet extends HttpServlet {
 		}
 		BufferedImage image=null;
 		Book book = service.findBookById(id);
-		if(book.getImg()==null||"".equals(book.getImg())){
+		if(book==null||book.getImg()==null||"".equals(book.getImg())){
+			if(book==null){
+				book = new Book();
+				book.setName("皓叶电子书");
+				book.setAuthor("皓叶");
+			}
 			BookImage bookImage=new BookImage(book);
 			image=bookImage.getImage();
 			ImageIO.write(image, "jpg",os);

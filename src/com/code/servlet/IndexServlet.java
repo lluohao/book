@@ -18,9 +18,9 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException {
 		IBookService bookService = ServiceFactory.getInstance()
 				.newBookService();
-		List<Book> randomBooks = bookService.randomBooks(10);
-		List<Book> hotBooks = bookService.hotBooks(10, 1);
-		List<Book> newBooks = bookService.newBooks(10, 1);
+		List<Book> randomBooks = bookService.randomBooks(12);
+		List<Book> hotBooks = bookService.hotBooks(12, 1);
+		List<Book> newBooks = bookService.newBooks(12, 1);
 		req.setAttribute("randomBooks", randomBooks);
 		req.setAttribute("hotBooks", hotBooks);
 		req.setAttribute("newBooks", newBooks);

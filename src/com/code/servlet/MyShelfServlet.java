@@ -21,7 +21,10 @@ public class MyShelfServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session=request.getSession();
-		int userId=(Integer)session.getAttribute("userId");
+		Integer userId=(Integer)session.getAttribute("userId");
+		if(userId==null){
+			request.getRequestDispatcher("/login.jsp").forward(request, response);;
+		}
 		int pageNo=1;
 		try{
 			pageNo=Integer.parseInt(request.getParameter("pageNo"));

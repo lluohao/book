@@ -25,7 +25,7 @@ public class BookImage {
 
 	public void init() {
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(0x702E04));
+		g.setColor(new Color(0x5CACEE));
 		g.fillRect(0, 0, 160, 213);
 		String title = book.getName();
 		String author = book.getAuthor();
