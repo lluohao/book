@@ -11,15 +11,25 @@ import com.code.dao.ICartDAO;
 import com.code.dao.fact.DaoFactory;
 import com.code.entity.Book;
 import com.code.service.IBookService;
-import com.code.service.ICartService;
 import com.code.service.fact.ServiceFactory;
+import com.code.service.impl.BookServiceImpl;
 import com.code.util.FileUtil;
 import com.code.util.PathUtil;
 
 public class BookServiceTest {
 	@Test
-	public void testAddFiles() throws Exception {
-		testAdd(new File("F:/data/book/武侠小说"), 10);
+	public static void main(String[] args) throws Exception {
+		BookServiceImpl impl = new BookServiceImpl();
+		for(int i = 0;i<8700;i++){
+			Book  book = impl.findBookById(i);
+			if(book!=null){
+				int price = (int) (Math.random()*100+100);
+				book.setPrice(price);
+				book.setDiscount(price);
+				impl.updateBook(book);
+				System.out.println(book.toString());
+			}
+		}
 	}
 
 	public void testAdd(File file, int typeId) throws Exception {
@@ -79,7 +89,7 @@ public class BookServiceTest {
 	@Test
 	public void testRandomBook() throws Exception {
 		IBookService service = ServiceFactory.getInstance().newBookService();
-		List<Book> books = service.newBooks(12, 1);
+		List<Book> books = service.randomBooks(12);
 		for (Book book : books) {
 			System.out.println(book);
 		}

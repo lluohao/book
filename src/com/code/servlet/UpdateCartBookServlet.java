@@ -26,14 +26,14 @@ public class UpdateCartBookServlet extends HttpServlet {
 		String[] bookIds = null;
 		String type;
 		int cartBookNum;
-		JSONObject json;
+		JSONObject json = json = new JSONObject();
 		List<Integer> fail = new ArrayList<Integer>();
 		try {
 			userId = (Integer) req.getSession().getAttribute("userId");
 			bookIds = req.getParameterValues("bookId");
 
 			type = req.getParameter("type");
-			json = new JSONObject();
+			
 			ICartService cartService = ServiceFactory.getInstance()
 					.newCartService();
 			int bookId;
@@ -89,7 +89,10 @@ public class UpdateCartBookServlet extends HttpServlet {
 			json.put("cartNum", cartBookNum);
 			out.print(json);
 		} catch (Exception e) {
-			e.printStackTrace();
+			json.put("isAdd", false);
+			json.put("isDelete", false);
+			json.put("message", "没有登录，操作失败");
+			out.print(json);
 		}
 	}
 }

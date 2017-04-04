@@ -10,27 +10,37 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
-public class AllFilter implements Filter{
+public class AllFilter implements Filter {
+	private boolean printError = false;
 
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse resp = (HttpServletResponse) res;
-		resp.setHeader("Access-Control-Allow-Origin","*"); 
-		resp.setHeader("Access-Control-Allow-Origin", "*"); 
-		chain.doFilter(req, resp);
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		try {
+			chain.doFilter(req, resp);
+		} catch (Exception e) {
+			if (!resp.isCommitted()) {
+				resp.sendRedirect("500.jsp");
+			}
+			if (printError) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-		
+	public void init(FilterConfig config) throws ServletException {
+		printError = "true".equals(config.getInitParameter("printError")
+				.toLowerCase());
 	}
 
 }

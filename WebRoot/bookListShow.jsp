@@ -57,9 +57,8 @@
 	function shopClick(_bookId) {
 		var bookIds="${bookIds}";
 		if(bookIds!=undefined){
-			alert(bookIds);
 			for(var i=0;i<bookIds.length;i++){
-				alert(bookIds[i]);
+				//alert(bookIds[i]);
 				if(bookIds[i]==_bookId){
 					Toast.showMessage("您已经加入购物车了,>_<再点我受不了了", 1000);
 					return;
@@ -87,7 +86,7 @@
 			type : "get",
 			url : "addCollectionServlet?" + _data,
 			success : function(result) {
-				if (result) {
+				if (result=="true") {
 					Toast.showMessage("收藏成功！您可以在我的收藏里查看。。。", 1000);
 				} else {
 					Toast.showMessage("收藏失败！！！", 1000);

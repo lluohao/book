@@ -7,6 +7,10 @@
   <filter>
     <filter-name>all</filter-name>
     <filter-class>com.code.filter.AllFilter</filter-class>
+    <init-param>
+    	<param-name>printError</param-name>
+    	<param-value>false</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>all</filter-name>

@@ -1,4 +1,4 @@
-<%@page import="com.code.service.fact.ServiceFactory"%>
+﻿<%@page import="com.code.service.fact.ServiceFactory"%>
 <%@page import="com.code.service.IUserService"%>
 <%@page import="com.code.entity.User"%>
 <%@page import="com.code.entity.Cart"%>
@@ -34,7 +34,7 @@
 	<div id="header-top">
 		<div id="div-top-content">
 			<div id="header-left">
-				<a class="header-top-a" href="hy.apk"> 皓叶移动版 </a>
+				<a class="header-top-a" href="hy.jsp"> 皓叶移动版 </a>
 			</div>
 			<script type="text/javascript">
 				function toUserMsg() {
@@ -86,7 +86,7 @@
 			href="bookListShowServlet?typeId=1" class="menu-a">网络小说</a> <a
 			href="bookListShowServlet?typeId=6" class="menu-a">教育教材</a> <a
 			href="bookListShowServlet?typeId=20" class="menu-a">计算机/IT</a> <a
-			href="hy.apk" class="menu-a">客户端</a> <a class="menu-a" href="userMsg.jsp">个人中心</a>
+			href="hy.jsp" class="menu-a">客户端</a> <a class="menu-a" href="userMsg.jsp">个人中心</a>
 	</div>
 
 </div>

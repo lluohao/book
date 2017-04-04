@@ -1,8 +1,10 @@
 package com.code.parse;
+
 import java.io.File;
 import java.net.URL;
 import java.sql.Timestamp;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,11 +14,7 @@ import com.code.mail.MailSender;
 import com.code.service.IBookService;
 import com.code.service.fact.ServiceFactory;
 
-/**
- * @author 罗浩
- *
- **/
-public class Main {
+public class MainTxt99 {
 	public static void parse(int start, int end, int count) {
 		IBookService service = ServiceFactory.getInstance().newBookService();
 		DownLoader loader = new DownLoader();
@@ -24,25 +22,25 @@ public class Main {
 		int p = 1;
 		for (int i = start; i < end; i++) {
 			try {
-				URL url = new URL("http://www.xuanshu.com/book/"+i+"/");
+				URL url = new URL("http://www.txt99.cc/txt/"+i+".html");
 				Document doc = Jsoup.parse(url, 5000);
-				Element ele = doc.select(".detail_right h1").first();
+				Element ele = doc.select("#downInfoArea h1").first();
 				String title = ele.text();
+				title = StringUtils.replace(title.toUpperCase(), "TXT下载", "");
+				System.out.println(title);
 				File folder = new File("c://data/" + title);
 				folder.mkdirs();
 
-				ele = doc.select(".intro #down").last();
+				ele = doc.select("#mainSoftIntro p").last();
 				String info = ele.text();
-				//System.out.println(i + ":" + info);
 
-				ele = doc.select(".tupian a img").first();
+				ele = doc.select(".downInfoRowL .img img").first();
 				String imgSrc = ele.attr("src");
 				if (!imgSrc.contains("notimg")) {
-					loader.download("http://www.qisuu.com/" + imgSrc, new File("c://data/" + title + "/1.jpg"));
+					loader.download(imgSrc, new File("c://data/" + title + "/1.jpg"));
 				}
 
-				ele = doc.select(".downButton").get(1);
-				boolean save = loader.download(ele.attr("href"), new File("c://data/" + title + "/1.txt"));
+				boolean save = loader.download("http://www.txt99.cc/home/down/txt/id/"+i, new File("c://data/" + title + "/1.txt"));
 
 				if (!save) {
 					continue;
@@ -70,11 +68,13 @@ public class Main {
 					p++;
 					sum=0;
 				}
-				//System.out.println(i + "====" + id);
+				System.out.println(i + "====" + id);
 			} catch (Exception e) {
 				System.out.println(i + "::" + e.getMessage());
 			}
 		}
 	}
-
+	public static void main(String[] args) {
+		parse(35765, 36759, 100);
+	}
 }

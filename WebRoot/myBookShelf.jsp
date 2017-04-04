@@ -36,7 +36,7 @@
   	<div id="allBook">
   		<c:forEach items="${bookLists}" var="book" varStatus="i">
 			<div id="myBook" style="margin-left: 30px;margin-top:20px;">
-				<img  src="bookImageServlet?bookId=${book.id }" class="book-image" onclick="location.href='readServlet?bookId=${book.id}';" /><br/>
+				<img  src="bookImageServlet?bookId=${book.id }" class="book-image" onclick="location.href='preReadServlet?bookId=${book.id}';" /><br/>
 				<div class="bookNameClass"><span id='bookName'>${book.name }</span></div>
 			</div>
 		</c:forEach>

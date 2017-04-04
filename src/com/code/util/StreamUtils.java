@@ -1,5 +1,9 @@
 package com.code.util;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,5 +55,19 @@ public class StreamUtils {
 			os.write(buff, 0, len);
 		}
 		os.flush();
+	}
+	
+	public static String readAll(InputStream is) throws IOException{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuilder builder = new StringBuilder();
+		String line = null;
+		while((line=reader.readLine())!=null){
+			builder.append(line);
+		}
+		return builder.toString();
+	}
+	public static void main(String[] args) throws IOException {
+		 FileInputStream fis = new FileInputStream("1.txt");
+		 System.out.println(readAll(fis));
 	}
 }

@@ -1,9 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>阅读界面</title>
+<title>${bookName}</title>
 </head>
 <link type="text/css" href="css/preRead.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
@@ -60,7 +60,7 @@
 			}
 		});
 	}
-	function toDownBook(){
+	function toDownBook() {
 		window.location.href = ("down?bookId=" + ${bookId});
 	}
 	function toReadBook() {
@@ -127,9 +127,9 @@
 								<div class="act">
 									<div class="btns">
 										<input class="btn1" type="button" id="buyBtn" value="${isBuy}"
-											onclick="toReadBook()" />
-										<input class="btn1" type="button" id="downBtn" value="下载"
-											onclick="toDownBook()" style="margin-left: 20px"/>
+											onclick="toReadBook()" /> <input class="btn1" type="button"
+											id="downBtn" value="下载" onclick="toDownBook()"
+											style="margin-left: 20px" />
 									</div>
 									<div class="o_act">
 										<ul class="o_list">
@@ -147,10 +147,11 @@
 				</div>
 				<div class="bookdetail">
 					<div class="b_tab">
-						<span class="chooseOne">
-							<a class="superLink"class="superLink"style="color:blue">内容预览</a>
-						</span> 
-						<span class="charset"><a href="preReadServlet?bookId=${bookId}&charset=UTF-8" class="superLink">乱码？</a></span>
+						<span class="chooseOne"> <a class="superLink"
+							class="superLink" style="color:blue">内容预览</a>
+						</span> <span class="charset"><a
+							href="preReadServlet?bookId=${bookId}&charset=UTF-8"
+							class="superLink">乱码？</a></span>
 					</div>
 					<div class="b_view">
 						<pre id="simple-text">${simpleText}</pre>
@@ -173,11 +174,9 @@
 							<a><img alt="" src="img/kindle.jpg" /></a>
 						</div>
 					</div>
-					<div class="theCode">
-						<img alt="" src="img/q.jpg" />
-					</div>
+
 					<div style="font-size: 10px;text-align: center;">
-						<span>扫描二维码下载客户端</span>
+						<img src="img/code.png" style="width:180px;height:180px" />
 					</div>
 				</div>
 				<div class="others">

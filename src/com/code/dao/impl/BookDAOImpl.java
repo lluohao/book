@@ -75,9 +75,9 @@ public class BookDAOImpl implements IBookDAO {
 		PreparedStatement psttm = null;
 		ResultSet rs = null;
 		String sql = "select * from book where book_type=? order by book_time desc limit ?,?";
-		if(typeId==-1){
+		if (typeId == -1) {
 			sql = "select * from book where ?=-1 order by book_time desc limit ?,?";
-		}else if (typeDAO.isParentType(typeId)) {
+		} else if (typeDAO.isParentType(typeId)) {
 			sql = sql
 					.replace("book_type=?",
 							"book_type in (select type_id from booktype where type_parent=?)");
@@ -203,26 +203,12 @@ public class BookDAOImpl implements IBookDAO {
 		if (ids == null || ids.length == 0) {
 			return new ArrayList<Book>();
 		}
-		// select * from user where user_id in (100000,100001)
-		DBConnection dbConn = new DBConnection();
-		Connection conn = null;
-		PreparedStatement psttm = null;
-		ResultSet rs = null;
-		String idsStr = Arrays.toString(ids).replace("[", "(")
-				.replace("]", ")");
-		String sql = "select * from book where book_id in " + idsStr;
 		List<Book> books = new ArrayList<Book>();
-		try {
-			conn = dbConn.getConnection();
-			psttm = conn.prepareStatement(sql);
-			rs = psttm.executeQuery();
-			while (rs != null && rs.next()) {
-				books.add(BookUtil.parseBook(rs));
+		for (int id : ids) {
+			Book book = findBookById(id);
+			if (book != null) {
+				books.add(book);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			dbConn.close(conn, psttm, rs);
 		}
 		return books;
 	}
@@ -472,7 +458,7 @@ public class BookDAOImpl implements IBookDAO {
 			pstmt.setString(10, book.getDiscribe());
 			pstmt.setInt(11, book.getDiscount());
 			pstmt.setInt(12, book.getId());
-		
+
 			int count = pstmt.executeUpdate();
 			result = count > 0;
 		} catch (SQLException e) {
@@ -485,7 +471,7 @@ public class BookDAOImpl implements IBookDAO {
 
 	@Override
 	public Book findBooksByKey(String bookName) {
-		Book book=null;
+		Book book = null;
 		DBConnection dbConn = new DBConnection();
 		Connection conn = null;
 		PreparedStatement psttm = null;
@@ -494,11 +480,11 @@ public class BookDAOImpl implements IBookDAO {
 		try {
 			conn = dbConn.getConnection();
 			psttm = conn.prepareStatement(sql);
-			psttm.setString(1,bookName);
+			psttm.setString(1, bookName);
 			rs = psttm.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
-					book=BookUtil.parseBook(rs);
+					book = BookUtil.parseBook(rs);
 				}
 			}
 		} catch (SQLException e) {
@@ -508,6 +494,5 @@ public class BookDAOImpl implements IBookDAO {
 		}
 		return book;
 	}
-
 
 }

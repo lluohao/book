@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import net.sf.json.JSONObject;
+import redis.clients.jedis.Jedis;
+
+import com.code.app.factory.JedisFactory;
+import com.code.config.SystemConfig;
 import com.code.dao.IBookDAO;
 import com.code.dao.ICartDAO;
 import com.code.dao.ICollectionDAO;
@@ -23,14 +28,16 @@ import com.code.entity.Cart;
 import com.code.entity.Collection;
 import com.code.entity.Shelf;
 import com.code.service.IBookService;
+import com.code.util.BookUtil;
 import com.code.util.PathUtil;
+import com.code.util.StringUtil;
 
 public class BookServiceImpl implements IBookService {
 	private IBookDAO bookDao = DaoFactory.newInstance().newBookDAO();
 	private ICartDAO cartDao = DaoFactory.newInstance().newCartDAO();
 	private IShelfDAO shelfDao = DaoFactory.newInstance().newShelfDAO();
-	private ICollectionDAO cltionDao = DaoFactory.newInstance()
-			.newCollectionDAO();
+	private ICollectionDAO cltionDao = DaoFactory.newInstance().newCollectionDAO();
+	private Jedis jedis = JedisFactory.getJedis();
 
 	@Override
 	public List<Book> randomBooks(int num) {
@@ -67,7 +74,11 @@ public class BookServiceImpl implements IBookService {
 				i++;
 			}
 		}
-		return bookDao.findBooksByIds(ids);
+		List<Book> books = new ArrayList<Book>();
+		for (int i : ids) {
+			books.add(findBookById(i));
+		}
+		return books;
 	}
 
 	@Override
@@ -91,8 +102,7 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public List<Book> searchByPrice(int typeId, int pricea, int priceb,
-			int pageNo, int pageCount, int orderType) {
+	public List<Book> searchByPrice(int typeId, int pricea, int priceb, int pageNo, int pageCount, int orderType) {
 		int minPrice;
 		int maxPrice;
 		if (pricea >= 0 && priceb >= 0) {
@@ -106,13 +116,27 @@ public class BookServiceImpl implements IBookService {
 		} else {
 			throw new RuntimeException("你特么sb吧,价格输个负值");
 		}
-		return bookDao.searchByPrice(typeId, minPrice, maxPrice, pageNo,
-				pageCount, orderType);
+		return bookDao.searchByPrice(typeId, minPrice, maxPrice, pageNo, pageCount, orderType);
 	}
 
 	@Override
 	public Book findBookById(int id) {
-		return bookDao.findBookById(id);
+		try {
+			String json = jedis.get("book_" + id);
+			if (json != null && json.length() > 0) {
+				Book book = BookUtil.parseBook(json);
+				return book;
+
+			}
+			Book book = bookDao.findBookById(id);
+			JSONObject jObj = JSONObject.fromObject(book);
+			jObj.put("time", book.getTime().getTime());
+			jedis.set("book_" + id, jObj.toString(), "NX", "EX", 300);
+			return book;
+		} catch (Exception e) {
+			return bookDao.findBookById(id);
+		}
+
 	}
 
 	@Override
@@ -241,34 +265,39 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public String simpleText(int id,String charset) {
+	public String simpleText(int id, String charset) {
+		int countLine = 200;
+		try {
+			countLine = StringUtil.safeToInteger(jedis.get("sc_preline"), 500);
+		} catch (Exception e) {
+		}
 		Book book = this.findBookById(id);
-		if (book == null || book.getContent() == null
-				|| book.getContent().isEmpty()) {
+		if (book == null || book.getContent() == null || book.getContent().isEmpty()) {
 			return "本书暂不支持试读！";
 		}
 		File file = new File(PathUtil.toAbsPath(book.getContent()));
 		if ((!file.exists()) || (!file.getName().endsWith("txt"))) {
 			return "本书暂不支持试读！";
 		}
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = null;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file), charset));
+			builder = new StringBuilder();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
 			String line = "";
 			int count = 0;
 			while ((line = reader.readLine()) != null) {
 				builder.append(line + "\n");
 				count++;
-				if (count >= 200) {
+				if (count >= countLine) {
 					break;
 				}
 			}
 			reader.close();
+			return builder.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "文件系统出现异常";
 		}
-		return builder.toString();
 	}
 
 }

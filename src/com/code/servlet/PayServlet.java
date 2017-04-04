@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import com.code.entity.Book;
 import com.code.service.IBookService;
+import com.code.service.ICartService;
 import com.code.service.IOrderService;
 import com.code.service.fact.ServiceFactory;
 
@@ -28,6 +29,8 @@ public class PayServlet extends HttpServlet {
 			int userId = (Integer) req.getSession().getAttribute("userId");
 			IBookService service = ServiceFactory.getInstance()
 					.newBookService();
+			ICartService cartService = ServiceFactory.getInstance()
+					.newCartService();
 			int accounts = 0;
 			int bookNums = 0;
 			int[] bookIds = new int[bookIdStrs.length];
@@ -43,6 +46,9 @@ public class PayServlet extends HttpServlet {
 			IOrderService orderService = ServiceFactory.getInstance()
 					.newOrderService();
 			int orderId = orderService.addOrder(bookIds, userId);
+			for (int bookId : bookIds) {
+				cartService.removeBook(bookId, userId);
+			}
 			req.setAttribute("orderId", orderId);
 			req.setAttribute("mab", accounts);
 			req.setAttribute("bookNums", bookNums);

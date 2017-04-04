@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
 <title>全网搜索</title>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/Toast.js"></script>
 </head>
 <style type="text/css">
 .net_books div {
@@ -86,7 +88,7 @@ em {
 		<c:forEach items="${books }" var="book" varStatus="index">
 			<div class="net_books">
 				<div id="net_book_title">
-					<a href="javascript:searchBook('${index.index }')">${book.name }</a>
+					<a href="javascript:Toast.showMessage('此功能暂时关闭',3000)">${book.name }</a>
 				</div>
 				<div>${book.author}</div>
 				<div style="max-height:40px;">${book.discribe }</div>

@@ -43,14 +43,17 @@ public interface ITypeService {
 	 * @return
 	 */
 	Type findByName(String name);
-	
+
 	/**
 	 * 添加一个类型
+	 * 
 	 * @param type
 	 * @return
 	 */
 	int addType(Type type);
+
 	Type findById(int typeId);
-	
-	String getLocation(String style,int typeId);
+
+	@Deprecated
+	String getLocation(String style, int typeId);
 }

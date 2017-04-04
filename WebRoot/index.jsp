@@ -54,8 +54,6 @@
 <body>
 	<%@include file="head.jsp"%>
 	<div id="content">
-
-
 		<!--
             	作者：840230057@qq.com
             	时间：2016-07-26
@@ -70,19 +68,26 @@
 					<a href="preReadServlet?bookId=${book.id}" target="_blank"><div
 							class="book-item" id="book${book.id}">
 							<div class="book-image">
-								<img src="bookImageServlet?bookId=${book.id}" width="160px" height="213px"/>
+								<img src="bookImageServlet?bookId=${book.id}" width="160px"
+									height="213px" />
 							</div>
 							<div class="book-title">
 								<p>${book.name }</p>
 							</div>
 							<div class="book-price">
-								<b>码币 ${book.price }</b>
+								<c:if test="${book.discount>0}">
+									<b style="text-decoration: line-through">码币 ${book.price }</b>|
+										<b style="color:red">折扣价 ${book.price-book.discount}</b>
+								</c:if>
+								<c:if test="${book.discount<=0 }">
+									<b>码币 ${book.price }</b>
+								</c:if>
 							</div>
 						</div> </a>
 				</c:forEach>
 			</div>
 		</div>
-		
+
 		<!--
             	作者：840230057@qq.com
             	时间：2016-07-26
@@ -94,16 +99,23 @@
 			</div>
 			<div class="index-content">
 				<c:forEach items="${newBooks }" var="book" varStatus="index">
-					<a href="preReadServlet?bookId=${book.id}"  target="_blank"><div
+					<a href="preReadServlet?bookId=${book.id}" target="_blank"><div
 							class="book-item" id="book${book.id}">
 							<div class="book-image">
-								<img src="bookImageServlet?bookId=${book.id}" width="160px"  height="213px"/>
+								<img src="bookImageServlet?bookId=${book.id}" width="160px"
+									height="213px" />
 							</div>
 							<div class="book-title">
 								<p>${book.name }</p>
 							</div>
 							<div class="book-price">
-								<b>码币 ${book.price }</b>
+								<c:if test="${book.discount>0}">
+									<b style="text-decoration: line-through">码币 ${book.price }</b>|
+										<b style="color:red">折扣价 ${book.price-book.discount}</b>
+								</c:if>
+								<c:if test="${book.discount<=0 }">
+									<b>码币 ${book.price }</b>
+								</c:if>
 							</div>
 						</div> </a>
 				</c:forEach>
@@ -120,22 +132,28 @@
 			</div>
 			<div class="index-content">
 				<c:forEach items="${randomBooks }" var="book" varStatus="index">
-					<a href="preReadServlet?bookId=${book.id}"  target="_blank"><div
+					<a href="preReadServlet?bookId=${book.id}" target="_blank"><div
 							class="book-item" id="book${book.id}">
 							<div class="book-image">
-								<img src="bookImageServlet?bookId=${book.id}" width="160px" height="213px" />
+								<img src="bookImageServlet?bookId=${book.id}" width="160px"
+									height="213px" />
 							</div>
 							<div class="book-title">
 								<p>${book.name }</p>
 							</div>
 							<div class="book-price">
-								<b>码币${book.price }</b>
+								<c:if test="${book.discount>0}">
+									<b style="text-decoration: line-through">码币 ${book.price }</b>|
+										<b style="color:red">折扣价 ${book.price-book.discount}</b>
+								</c:if>
+								<c:if test="${book.discount<=0 }">
+									<b>码币 ${book.price }</b>
+								</c:if>
 							</div>
 						</div> </a>
 				</c:forEach>
 			</div>
 		</div>
-
 	</div>
 	<%@include file="foot.jsp"%>
 </body>

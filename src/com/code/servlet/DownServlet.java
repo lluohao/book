@@ -47,12 +47,13 @@ public class DownServlet extends HttpServlet {
 				req.getRequestDispatcher("404.html").forward(req, res);
 				return;
 			}
-			
+
 			/**
 			 * 判断书是否免费
 			 */
-			if (book.getPrice() == 0) {
-				res.setHeader("Content-disposition","attachment;filename=\""+book.getId()+file.getName()+"\"");
+			if (book.getPrice() == 0 || book.getPrice() == book.getDiscount()) {
+				res.setHeader("Content-disposition", "attachment;filename=\""
+						+ book.getId() + file.getName() + "\"");
 				res.setContentType("application/octet-stream");
 				OutputStream os = res.getOutputStream();
 				InputStream is = new FileInputStream(file);
@@ -81,7 +82,10 @@ public class DownServlet extends HttpServlet {
 				if (!has) {
 					req.getRequestDispatcher("payServlet").forward(req, res);
 				} else {
-					res.setHeader("Content-disposition","attachment;filename=\""+book.getId()+file.getName()+"\"");
+					res.setHeader(
+							"Content-disposition",
+							"attachment;filename=\"" + book.getId()
+									+ file.getName() + "\"");
 					res.setContentType("application/octet-stream");
 					OutputStream os = res.getOutputStream();
 					InputStream is = new FileInputStream(file);
