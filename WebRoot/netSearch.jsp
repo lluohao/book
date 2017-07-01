@@ -88,7 +88,7 @@ em {
 		<c:forEach items="${books }" var="book" varStatus="index">
 			<div class="net_books">
 				<div id="net_book_title">
-					<a href="javascript:Toast.showMessage('此功能暂时关闭',3000)">${book.name }</a>
+					<a href="${book.url }">${book.name }</a>
 				</div>
 				<div>${book.author}</div>
 				<div style="max-height:40px;">${book.discribe }</div>

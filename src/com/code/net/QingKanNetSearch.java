@@ -40,7 +40,6 @@ public class QingKanNetSearch implements NetSearch {
 				books.add(book);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return books;
 	}

@@ -13,10 +13,7 @@ import java.util.Random;
 import java.util.Set;
 
 import net.sf.json.JSONObject;
-import redis.clients.jedis.Jedis;
 
-import com.code.app.factory.JedisFactory;
-import com.code.config.SystemConfig;
 import com.code.dao.IBookDAO;
 import com.code.dao.ICartDAO;
 import com.code.dao.ICollectionDAO;
@@ -37,7 +34,6 @@ public class BookServiceImpl implements IBookService {
 	private ICartDAO cartDao = DaoFactory.newInstance().newCartDAO();
 	private IShelfDAO shelfDao = DaoFactory.newInstance().newShelfDAO();
 	private ICollectionDAO cltionDao = DaoFactory.newInstance().newCollectionDAO();
-	private Jedis jedis = JedisFactory.getJedis();
 
 	@Override
 	public List<Book> randomBooks(int num) {
@@ -121,21 +117,8 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public Book findBookById(int id) {
-		try {
-			String json = jedis.get("book_" + id);
-			if (json != null && json.length() > 0) {
-				Book book = BookUtil.parseBook(json);
-				return book;
-
-			}
-			Book book = bookDao.findBookById(id);
-			JSONObject jObj = JSONObject.fromObject(book);
-			jObj.put("time", book.getTime().getTime());
-			jedis.set("book_" + id, jObj.toString(), "NX", "EX", 300);
-			return book;
-		} catch (Exception e) {
-			return bookDao.findBookById(id);
-		}
+		Book book = bookDao.findBookById(id);
+		return book;
 
 	}
 
@@ -267,10 +250,6 @@ public class BookServiceImpl implements IBookService {
 	@Override
 	public String simpleText(int id, String charset) {
 		int countLine = 200;
-		try {
-			countLine = StringUtil.safeToInteger(jedis.get("sc_preline"), 500);
-		} catch (Exception e) {
-		}
 		Book book = this.findBookById(id);
 		if (book == null || book.getContent() == null || book.getContent().isEmpty()) {
 			return "本书暂不支持试读！";

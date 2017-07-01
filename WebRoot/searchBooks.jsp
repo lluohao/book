@@ -23,7 +23,7 @@
 	<div id="content">
 		<div id="left_div">
 			<a style="float:right;padding-right: 20px;"
-				href="netSearchServlet?keyCode=${keyCode }">没有找到想要的？>_<试试全网搜索吧！</a>
+				href="netSearchServlet?keyCode=${keyCode }">没有找到想要的？试试全网搜索吧！</a>
 			<c:choose>
 				<c:when test="${pageNoAll==0 }">
 					<div id="no_found">

@@ -1,6 +1,7 @@
 package com.code.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.code.entity.Book;
+import com.code.net.NetBook;
 import com.code.service.INetBookService;
 import com.code.service.fact.ServiceFactory;
 
